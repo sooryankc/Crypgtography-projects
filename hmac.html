@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HMAC Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+      word-break: break-all;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔐 HMAC Generator</h2>
+
+  <label for="message">Message:</label>
+  <textarea id="message" rows="3" placeholder="Enter your message"></textarea>
+
+  <label for="key">Secret Key:</label>
+  <input type="text" id="key" placeholder="Enter secret key" />
+
+  <label for="algorithm">Hash Algorithm:</label>
+  <select id="algorithm">
+    <option value="SHA1">SHA-1</option>
+    <option value="SHA256">SHA-256</option>
+    <option value="SHA512">SHA-512</option>
+    <option value="MD5">MD5</option>
+  </select>
+
+  <button onclick="generateHMAC()">Generate HMAC</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    function generateHMAC() {
+      const msg = document.getElementById("message").value;
+      const key = document.getElementById("key").value;
+      const algo = document.getElementById("algorithm").value;
+
+      let result;
+      if (algo === "SHA1") {
+        result = CryptoJS.HmacSHA1(msg, key);
+      } else if (algo === "SHA256") {
+        result = CryptoJS.HmacSHA256(msg, key);
+      } else if (algo === "SHA512") {
+        result = CryptoJS.HmacSHA512(msg, key);
+      } else if (algo === "MD5") {
+        result = CryptoJS.HmacMD5(msg, key);
+      }
+
+      document.getElementById("output").innerText = "HMAC (" + algo + "):\n" + result.toString(CryptoJS.enc.Hex);
+    }
+  </script>
+</body>
+</html>
